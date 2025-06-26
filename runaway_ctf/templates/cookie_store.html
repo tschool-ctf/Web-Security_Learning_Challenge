@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>監獄餅乾店</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #f5deb3;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            min-height: 100vh;
+        }
+        h1 {
+            text-shadow: 0 0 10px #f5deb3;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .cookies-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 40px auto;
+            max-width: 900px;
+        }
+        .cookie-item {
+            background-color: #2a2a2a;
+            border: 3px solid #654321;
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .cookie-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 15px rgba(245, 222, 179, 0.5);
+        }
+        .cookie-image {
+            width: 150px;
+            height: 150px;
+            background-color: #654321;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+        }
+        .cookie-name {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #f5deb3;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+        }
+        .modal-content {
+            background-color: #2a2a2a;
+            margin: 10% auto;
+            padding: 30px;
+            border: 3px solid #654321;
+            border-radius: 15px;
+            width: 70%;
+            max-width: 600px;
+            color: #f5deb3;
+            position: relative;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+        }
+        .close:hover, .close:focus {
+            color: #f5deb3;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .recipe-btn {
+            background-color: #654321;
+            color: #f5deb3;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+        .recipe-btn:hover {
+            background-color: #8B4513;
+            transform: scale(1.05);
+        }
+        .backdoor {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 70px;
+            height: 140px;
+            background-color: #654321;
+            border: 3px solid #8B4513;
+            border-radius: 5px 5px 0 0;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .backdoor:hover {
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 0 15px rgba(245, 222, 179, 0.5);
+        }
+        .doorknob {
+            width: 15px;
+            height: 15px;
+            background-color: #FFD700;
+            border-radius: 50%;
+            position: absolute;
+            right: 10px;
+        }
+        .password-modal {
+            display: none;
+            position: fixed;
+            z-index: 2;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+        }
+        .password-modal-content {
+            background-color: #2a2a2a;
+            margin: 15% auto;
+            padding: 30px;
+            border: 3px solid #654321;
+            border-radius: 15px;
+            width: 50%;
+            max-width: 400px;
+        }
+        .password-input {
+            width: 80%;
+            padding: 10px;
+            margin: 20px 0;
+            border: 2px solid #654321;
+            background-color: #1a1a1a;
+            color: #f5deb3;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .submit-btn {
+            background-color: #654321;
+            color: #f5deb3;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .submit-btn:hover {
+            background-color: #8B4513;
+        }
+        .hint {
+            margin-top: 40px;
+            font-style: italic;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>秘密監獄餅乾店</h1>
+        <p>囚犯們的最愛！點擊餅乾查看詳情</p>
+        
+        <div class="cookies-container">
+            <div class="cookie-item" onclick="openModal('cookie1')">
+                <div class="cookie-image">🍪</div>
+                <div class="cookie-name">鐵窗餅</div>
+            </div>
+            
+            <div class="cookie-item" onclick="openModal('cookie2')">
+                <div class="cookie-image">🍪</div>
+                <div class="cookie-name">逃獄餅</div>
+            </div>
+            
+            <div class="cookie-item" onclick="openModal('cookie3')">
+                <div class="cookie-image">🍪</div>
+                <div class="cookie-name">金鑰餅</div>
+            </div>
+            
+            <div class="cookie-item" onclick="openModal('cookie4')">
+                <div class="cookie-image">🍪</div>
+                <div class="cookie-name">看守餅</div>
+            </div>
+            
+            <div class="cookie-item" onclick="openModal('cookie5')">
+                <div class="cookie-image">🍪</div>
+                <div class="cookie-name">自由餅</div>
+            </div>
+            
+            <div class="cookie-item" onclick="openModal('cookie6')">
+                <div class="cookie-image">🍪</div>
+                <div class="cookie-name">特務餅</div>
+            </div>
+        </div>
+        
+        <div class="hint">
+            <p>提示：秘密不總是隱藏在明顯的地方，有時需要仔細檢查特別的餅乾...</p>
+        </div>
+
+        <div class="backdoor" onclick="openPasswordModal()">
+            <div class="doorknob"></div>
+            <span style="transform: rotate(90deg); color: #f5deb3;">廚房後門</span>
+        </div>
+    </div>
+
+    <!-- 餅乾詳情彈窗 -->
+    <div id="cookieModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <p id="modalDescription"></p>
+            <button class="recipe-btn" id="recipeButton" onclick="getRecipe()">獲取秘方</button>
+        </div>
+    </div>
+
+    <!-- 密碼彈窗 -->
+    <div id="passwordModal" class="password-modal">
+        <div class="password-modal-content">
+            <span class="close" onclick="closePasswordModal()">&times;</span>
+            <h2>廚房後門</h2>
+            <p>請輸入密碼</p>
+            <form id="passwordForm" action="/check_password" method="post">
+                <input type="text" name="password" class="password-input" placeholder="請輸入密碼..." required>
+                <button type="submit" class="submit-btn">確認</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // 餅乾資料
+        const cookies = {
+            cookie1: {
+                name: "鐵窗餅",
+                description: "象徵監獄鐵窗的餅乾，由梧桐葉和糖霜製成的條紋，口味帶有一絲憂傷。特色是吃了之後會讓你感覺被限制在一個小空間內，但卻是監獄中最受歡迎的甜點之一。"
+            },
+            cookie2: {
+                name: "逃獄餅",
+                description: "傳說中能激發你逃脫能力的餅乾，內藏一把微型鋸子（其實是杏仁片）。此餅乾含有能提高警覺性的咖啡因，是高風險囚犯的禁止食物。"
+            },
+            cookie3: {
+                name: "金鑰餅",
+                description: "形狀像鑰匙的餅乾，據說吃了能帶來好運。特殊的焦糖配方使其口感特別香甜，是新囚犯的歡迎禮物。秘方經過特別保護，只有最優秀的囚犯才能獲得。"
+            },
+            cookie4: {
+                name: "看守餅",
+                description: "嚴肅的外表下隱藏著柔軟的內心，就像某些看守一樣。這款餅乾外酥內軟，撒上了少許辣椒粉，提醒囚犯們規矩的重要性。"
+            },
+            cookie5: {
+                name: "自由餅",
+                description: "形狀像一隻展翅的鴿子，代表著自由的希望。口感輕盈如雲，彷彿能帶你飛越高牆。每個囚犯都夢想著能嚐到監獄外的正宗自由餅。"
+            },
+            cookie6: {
+                name: "特務餅",
+                description: "監獄最神秘的餅乾，外表普通卻隱藏著秘密。餅乾中間有一層特殊的夾心，據說品嚐後能獲得特殊資訊。是監獄長的最愛，只在特殊場合提供。"
+            }
+        };
+
+        let currentCookie = '';
+
+        function openModal(cookieId) {
+            currentCookie = cookieId;
+            document.getElementById('modalTitle').textContent = cookies[cookieId].name;
+            document.getElementById('modalDescription').textContent = cookies[cookieId].description;
+            document.getElementById('cookieModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('cookieModal').style.display = 'none';
+        }
+
+        function openPasswordModal() {
+            document.getElementById('passwordModal').style.display = 'block';
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').style.display = 'none';
+        }
+
+        function getRecipe() {
+            // 發送AJAX請求獲取餅乾秘方
+            fetch('/cookie_recipe/' + currentCookie, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    alert(data.message);
+                    if (data.success) {
+                        document.getElementById('recipeButton').style.backgroundColor = "#4CAF50";
+                        // 移除禁用按鈕和文字更改，讓使用者可以多次點擊
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('獲取秘方失敗，請稍後再試');
+            });
+        }
+
+        // 當用戶點擊彈窗以外的區域時關閉彈窗
+        window.onclick = function(event) {
+            let modal = document.getElementById('cookieModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+            
+            let passwordModal = document.getElementById('passwordModal');
+            if (event.target == passwordModal) {
+                closePasswordModal();
+            }
+        };
+
+        // 提交密碼表單
+        document.getElementById('passwordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const password = document.querySelector('.password-input').value;
+            
+            fetch('/check_password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'password=' + encodeURIComponent(password)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/paths';
+                } else {
+                    alert(data.message || '密碼錯誤，請重試');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('系統錯誤，請稍後再試');
+            });
+        });
+    </script>
+</body>
+</html>

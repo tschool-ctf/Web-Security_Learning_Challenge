@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成功逃出！</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #33ff33;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        h1 {
+            text-shadow: 0 0 10px #33ff33;
+            font-size: 3em;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+        .success-box {
+            background-color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 30px;
+            border: 2px solid #33ff33;
+            box-shadow: 0 0 20px rgba(51, 255, 51, 0.5);
+        }
+        .flag {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 1.5em;
+            color: #ffcc00;
+            letter-spacing: 1px;
+        }
+        .fireworks {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        @keyframes confetti {
+            0% { transform: translateY(-100vh); }
+            100% { transform: translateY(100vh); }
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--color);
+            top: -10px;
+            animation: confetti 5s linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <div id="confetti-container"></div>
+    
+    <div class="container">
+        <h1>恭喜你成功逃出了！</h1>
+        
+        <div class="success-box">
+            <h2>越獄成功</h2>
+            <p>你成功地運用了網路安全知識，突破了所有的障礙，成功逃出了這座網路安全監獄！</p>
+            <p>你已經證明了你的網路安全技能。</p>
+            
+            <div class="flag">
+                <p>你的獎勵：{{ flag }}</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 創建五彩紙屑效果
+        const colors = ['#33ff33', '#ff3333', '#3333ff', '#ffcc00', '#cc00ff', '#00ccff'];
+        const confettiCount = 100;
+        const container = document.getElementById('confetti-container');
+        
+        for (let i = 0; i < confettiCount; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.setProperty('--color', colors[Math.floor(Math.random() * colors.length)]);
+            confetti.style.left = `${Math.random() * 100}%`;
+            confetti.style.opacity = Math.random() + 0.5;
+            confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+            confetti.style.animationDelay = `${Math.random() * 5}s`;
+            container.appendChild(confetti);
+        }
+    </script>
+</body>
+</html>

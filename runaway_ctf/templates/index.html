@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Runaway from Web Security Jail</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #33ff33;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        h1 {
+            text-shadow: 0 0 10px #33ff33;
+            font-size: 2.5em;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .robot {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            left: calc(50% - 40px);
+            top: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease-out;
+            pointer-events: none; /* 防止點擊 */
+        }
+        #playground {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            pointer-events: none;
+        }
+        
+        /* 設置調試用的邊線顯示 - 正式使用時可刪除 */
+        /* 
+        #playground::after {
+            content: '';
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            right: 100px;
+            bottom: 100px;
+            border: 1px dashed rgba(51, 255, 51, 0.3);
+            pointer-events: none;
+            z-index: -1;
+        }
+        */
+        .robot-body {
+            width: 80px;
+            height: 100px;
+            background-color: #888;
+            border-radius: 10px;
+            position: relative;
+        }
+        .robot-head {
+            width: 60px;
+            height: 50px;
+            background-color: #aaa;
+            border-radius: 10px;
+            position: absolute;
+            top: -30px;
+            left: 10px;
+        }
+        .robot-eye {
+            width: 15px;
+            height: 15px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+            top: 15px;
+        }
+        .robot-eye.left {
+            left: 10px;
+        }
+        .robot-eye.right {
+            right: 10px;
+        }
+        .instructions {
+            margin-top: 30px;
+            font-size: 1.2em;
+            color: #cccccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Runaway from Web Security Jail</h1>
+        <p>你被關在網路安全監獄中，需要運用你的技能逃離這裡！</p>
+        <p>首先，你需要抓住逃跑的警衛機器人。</p>
+        
+        <div id="playground">
+            <div class="robot" id="robot">
+                <div class="robot-head">
+                    <div class="robot-eye left"></div>
+                    <div class="robot-eye right"></div>
+                </div>
+                <div class="robot-body"></div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <p>點擊機器人來抓住它！</p>
+        </div>
+    </div>
+
+    <script>
+        // 滑鼠追蹤功能，讓機器人逃離滑鼠
+        document.addEventListener('DOMContentLoaded', function() {
+            const robot = document.getElementById('robot');
+            const playground = document.getElementById('playground');
+            const maxDistance = 250; // 機器人會反應的最大距離
+            
+            // 設定邊界安全區域（隱形的框）
+            const safeMargin = 100; // 邊線安全距離
+            
+            // 設定機器人的初始位置（在安全區域內）
+            let robotX = safeMargin + Math.random() * (window.innerWidth - 2 * safeMargin);
+            let robotY = safeMargin + Math.random() * (window.innerHeight - 2 * safeMargin);
+            updateRobotPosition();
+            
+            // 追蹤滑鼠移動
+            document.addEventListener('mousemove', function(e) {
+                // 直接使用滑鼠在網頁中的座標
+                const mouseX = e.clientX;
+                const mouseY = e.clientY;
+                
+                // 計算滑鼠和機器人之間的距離
+                const robotCenterX = robotX + 40;
+                const robotCenterY = robotY + 75;
+                const dx = mouseX - robotCenterX;
+                const dy = mouseY - robotCenterY;
+                const distance = Math.sqrt(dx*dx + dy*dy);
+                
+                // 如果距離小於最大追蹤距離，機器人會逃跑
+                if (distance < maxDistance) {
+                    // 計算逃跑方向（遠離滑鼠）
+                    const angle = Math.atan2(dy, dx);
+                    const escapeDistance = (maxDistance - distance) / 1.5;
+                    
+                    // 更新機器人位置，朝反方向移動
+                    robotX -= Math.cos(angle) * escapeDistance;
+                    robotY -= Math.sin(angle) * escapeDistance;
+                    
+                    // 確保機器人不會逃出安全區域
+                    robotX = Math.max(safeMargin, Math.min(robotX, window.innerWidth - safeMargin - 80));
+                    robotY = Math.max(safeMargin, Math.min(robotY, window.innerHeight - safeMargin - 100));
+                    
+                    updateRobotPosition();
+                }
+            });
+            
+            // 隨機移動機器人
+            setInterval(function() {
+                robotX += (Math.random() - 0.5) * 50;
+                robotY += (Math.random() - 0.5) * 50;
+                
+                // 確保機器人不會逃出安全區域
+                robotX = Math.max(safeMargin, Math.min(robotX, window.innerWidth - safeMargin - 80));
+                robotY = Math.max(safeMargin, Math.min(robotY, window.innerHeight - safeMargin - 100));
+                
+                updateRobotPosition();
+            }, 1000);
+            
+            function updateRobotPosition() {
+                robot.style.left = robotX + 'px';
+                robot.style.top = robotY + 'px';
+            }
+        });
+    </script>
+</body>
+</html>

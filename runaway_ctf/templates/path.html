@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>路徑資訊</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #33ff33;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        h1 {
+            text-shadow: 0 0 10px #33ff33;
+            font-size: 2.5em;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .message-box {
+            background-color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 30px;
+            font-size: 1.5em;
+        }
+        .back-button {
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #33ff33;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            border: 1px solid #33ff33;
+            transition: all 0.3s;
+        }
+        .back-button:hover {
+            background-color: #33ff33;
+            color: #333;
+        }
+        a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>路徑資訊</h1>
+        
+        <div class="message-box">
+            {{ message|safe }}
+        </div>
+        
+        <a href="/paths" class="back-button">返回選擇</a>
+    </div>
+</body>
+</html>

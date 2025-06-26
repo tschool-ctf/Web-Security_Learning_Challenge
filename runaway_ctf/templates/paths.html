@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>選擇正確的路徑</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #33ff33;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        h1 {
+            text-shadow: 0 0 10px #33ff33;
+            font-size: 2.5em;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .doors-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        .door {
+            width: 150px;
+            height: 250px;
+            background-color: #654321;
+            border: 5px solid #8B4513;
+            border-radius: 10px 10px 0 0;
+            position: relative;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .door:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(51, 255, 51, 0.5);
+        }
+        .doorknob {
+            width: 20px;
+            height: 20px;
+            background-color: #FFD700;
+            border-radius: 50%;
+            position: absolute;
+            right: 15px;
+            top: 125px;
+        }
+        .door-number {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            color: #FFD700;
+        }
+        .hint {
+            margin-top: 40px;
+            font-style: italic;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>選擇正確的路徑</h1>
+        <p>在你面前有五道門，只有一道能夠通往自由。選擇錯誤可能會導致更糟糕的後果...</p>
+        
+        <div class="doors-container">
+            <a href="/path/1" style="text-decoration: none;">
+                <div class="door">
+                    <div class="doorknob"></div>
+                    <div class="door-number">1</div>
+                </div>
+            </a>
+            
+            <a href="/path/2" style="text-decoration: none;">
+                <div class="door">
+                    <div class="doorknob"></div>
+                    <div class="door-number">2</div>
+                </div>
+            </a>
+            
+            <a href="/path/3" style="text-decoration: none;">
+                <div class="door">
+                    <div class="doorknob"></div>
+                    <div class="door-number">3</div>
+                </div>
+            </a>
+            
+            <a href="/path/4" style="text-decoration: none;">
+                <div class="door">
+                    <div class="doorknob"></div>
+                    <div class="door-number">4</div>
+                </div>
+            </a>
+            
+            <a href="/path/5" style="text-decoration: none;">
+                <div class="door">
+                    <div class="doorknob"></div>
+                    <div class="door-number">5</div>
+                </div>
+            </a>
+        </div>
+        
+        <div class="hint">
+            <p>提示：表面的路徑並不總是真實的路徑...</p>
+        </div>
+    </div>
+</body>
+</html>

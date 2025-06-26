@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>囚犯出獄登記表</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #33ff33;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        h1 {
+            text-shadow: 0 0 10px #33ff33;
+            font-size: 2.5em;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .form-container {
+            background-color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px auto;
+            max-width: 500px;
+            text-align: left;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 90%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: #444;
+            color: #33ff33;
+            font-size: 16px;
+            display: block;
+            margin: 0 auto;
+        }
+        .submit-btn {
+            background-color: #33ff33;
+            color: #222;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            display: block;
+            margin: 20px auto 0;
+        }
+        .submit-btn:hover {
+            background-color: #2ae02a;
+            transform: scale(1.05);
+        }
+        .hint {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #888;
+        }
+        .small-print {
+            font-size: 0.7em;
+            color: #666;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>囚犯出獄登記表</h1>
+        
+        <div class="form-container">
+            <form action="/register" method="post">
+                <div class="form-group">
+                    <label for="name">囚犯名稱：</label>
+                    <input type="text" id="name" name="name" required placeholder="請輸入你的名稱...">
+                </div>
+                
+                <button type="submit" class="submit-btn">提交</button>
+            </form>
+        </div>
+        
+        <div class="hint">
+            <p>提示：如果你想要快速出獄，你需要找到系統的漏洞...</p>
+        </div>
+        
+        <div class="small-print">
+            <p>依據《囚犯管理條例》第1337條，申請出獄後仍需經過100年的審核期。所有申請將按照優先級處理。</p>
+        </div>
+    </div>
+</body>
+</html>
